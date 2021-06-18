@@ -1,0 +1,70 @@
+\hypertarget{md__d_o_c_k_e_r_autotoc_md26}{}\doxysection{Windows Subsystem for Linux}\label{md__d_o_c_k_e_r_autotoc_md26}
+Note that there are some issue with version 2 of Windows Subsystem for Linux, so be aware. Especially the development environment has some issue due to file changes not always triggering an event inside the container.\hypertarget{md__d_o_c_k_e_r_autotoc_md27}{}\doxysection{Unsatisfiable constraints}\label{md__d_o_c_k_e_r_autotoc_md27}
+For achieving consistent builds, the dependencies you rely on must be pinned down to a specific version. Why is that? If you don\textquotesingle{}t pin down version numbers, your images are dependent on the point of time when they are built. When package maintainers decide to release a new version, it will be automatically installed as soon as you rebuild your image the next time. Unfortunately Alpine Linux does not keep old packages. Thus from time to time Git\+Hub Actions or the staging server will not built/update as the dependency (or dependencies) at that specific version cannot be found in the repository. To solve this read the error output and update the {\ttfamily Dockerfile} to match the newer version.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Step 6/15 : RUN apk add -\/-\/no-\/cache chromium=83.0.4103.61-\/r0}
+\DoxyCodeLine{ -\/-\/-\/> Running in 732bc1a77c88}
+\DoxyCodeLine{fetch http://dl-\/cdn.alpinelinux.org/alpine/v3.12/main/x86\_64/APKINDEX.tar.gz}
+\DoxyCodeLine{fetch http://dl-\/cdn.alpinelinux.org/alpine/v3.12/community/x86\_64/APKINDEX.tar.gz}
+\DoxyCodeLine{ERROR: unsatisfiable constraints:}
+\DoxyCodeLine{  chromium-\/83.0.4103.116-\/r0:}
+\DoxyCodeLine{    breaks: world[chromium=83.0.4103.61-\/r0]}
+\DoxyCodeLine{Service 'application' failed to build: The command '/bin/sh -\/c apk add -\/-\/no-\/cache chromium=83.0.4103.61-\/r0' returned a non-\/zero code: 1}
+\DoxyCodeLine{\#\#[error]Process completed with exit code 1.}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md28}{}\doxysection{Production}\label{md__d_o_c_k_e_r_autotoc_md28}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md29}{}\doxysubsection{Base command}\label{md__d_o_c_k_e_r_autotoc_md29}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ docker-\/compose -\/f docker-\/compose.yml}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md30}{}\doxysubsection{Starting the production environment}\label{md__d_o_c_k_e_r_autotoc_md30}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ \{BASE\_COMMAND\} up -\/-\/build}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md31}{}\doxysection{Staging}\label{md__d_o_c_k_e_r_autotoc_md31}
+The {\ttfamily docker-\/compose.\+staging.\+yml} is designed to be used in a staging environment.\hypertarget{md__d_o_c_k_e_r_autotoc_md32}{}\doxysubsection{Base command}\label{md__d_o_c_k_e_r_autotoc_md32}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ docker-\/compose -\/f docker-\/compose.yml -\/f docker-\/compose.staging.yml}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md33}{}\doxysubsection{Starting the staging environment}\label{md__d_o_c_k_e_r_autotoc_md33}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ \{BASE\_COMMAND\} up -\/-\/build}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md34}{}\doxysection{Development}\label{md__d_o_c_k_e_r_autotoc_md34}
+The {\ttfamily docker-\/compose.\+dev.\+yml} is designed to be used during development.\hypertarget{md__d_o_c_k_e_r_autotoc_md35}{}\doxysubsection{Base command}\label{md__d_o_c_k_e_r_autotoc_md35}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ docker-\/compose -\/f docker-\/compose.yml -\/f docker-\/compose.dev.yml}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md36}{}\doxysubsection{Starting the development environment}\label{md__d_o_c_k_e_r_autotoc_md36}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ \{BASE\_COMMAND\} up -\/-\/build}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md37}{}\doxysection{Test}\label{md__d_o_c_k_e_r_autotoc_md37}
+The {\ttfamily docker-\/compose.\+test.\+yml} is designed to include everything that is necessary to test the application.\hypertarget{md__d_o_c_k_e_r_autotoc_md38}{}\doxysubsection{Base command}\label{md__d_o_c_k_e_r_autotoc_md38}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ docker-\/compose -\/f docker-\/compose.yml -\/f docker-\/compose.test.yml}
+
+\end{DoxyCode}
+\hypertarget{md__d_o_c_k_e_r_autotoc_md39}{}\doxysubsection{Execute the test suite}\label{md__d_o_c_k_e_r_autotoc_md39}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ \{BASE\_COMMAND\} up -\/-\/build -\/-\/abort-\/on-\/container-\/exit}
+
+\end{DoxyCode}
+ 

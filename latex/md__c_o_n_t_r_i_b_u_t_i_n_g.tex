@@ -1,0 +1,63 @@
+We would love for you to contribute to {\itshape Alice\+O2 Bookkeeping} and help make it even better than it is today! As a contributor, here are the guidelines we would like you to follow\+:
+\begin{DoxyItemize}
+\item \href{\#coding-conventions}{\texttt{ Coding conventions}}
+\item \href{\#endpoint-conventions}{\texttt{ Endpoint conventions}}
+\item \href{\#commit-message-guidelines}{\texttt{ Commit Message Guidelines}}
+\item \href{\#trunk-based-development}{\texttt{ Trunk based development guidelines}}
+\end{DoxyItemize}\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md5}{}\doxysection{Coding conventions}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md5}
+To ensure consistency throughout the source code, keep these rules in mind as you are working\+:
+\begin{DoxyItemize}
+\item All features or bug fixes must be tested by one or more specs (unit-\/tests).
+\item All endpoints must be tested by one or more specs (e2e-\/tests).
+\item All code must be formatted. An automated formatter is available ({\ttfamily npm run lint\+:fix}).
+\end{DoxyItemize}\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md6}{}\doxysection{Endpoint conventions}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md6}
+A {\bfseries{resource can be a singleton or a collection}}. For example, \char`\"{}\`{}customers\`{}\char`\"{} is a collection resource and \char`\"{}\`{}customer\`{}\char`\"{} is a singleton resource (in a banking domain). We can identify \char`\"{}\`{}customers\`{}\char`\"{} collection resource using the URI \char`\"{}\`{}customers\`{}\char`\"{}. We can identify a single \char`\"{}\`{}customer\`{}\char`\"{} resource using the URI \char`\"{}\`{}/customers/\{customer\+Id\}\`{}\char`\"{}.
+
+A {\bfseries{resource may contain sub-\/collection resources}} also. For example, sub-\/collection resource \char`\"{}\`{}accounts\`{}\char`\"{} of a particular \char`\"{}\`{}customer\`{}\char`\"{} can be identified using the URI \char`\"{}\`{}/customers/\{customer\+Id\}/accounts\`{}\char`\"{} (in a banking domain). Similarly, a singleton resource \char`\"{}\`{}account\`{}\char`\"{} inside the sub-\/collection resource \char`\"{}\`{}accounts\char`\"{}{\ttfamily can be identified as follows\+: \char`\"{}$<$/tt$>$/customers/\{customer\+Id\}/accounts/\{account\+Id\}\`{}\char`\"{}.}
+
+{\ttfamily }\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md7}{}\doxysubsection{Example}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md7}
+{\ttfamily 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{GET   /orders          <-\/-\/-\/> orders}
+\DoxyCodeLine{POST  /orders          <-\/-\/-\/> orders.push(data)}
+\DoxyCodeLine{GET   /orders/1        <-\/-\/-\/> orders[1]}
+\DoxyCodeLine{PUT   /orders/1        <-\/-\/-\/> orders[1] = data}
+\DoxyCodeLine{PATCH /orders/1        <-\/-\/-\/> orders[1] = \{ ...orders[1], ...data \}}
+\DoxyCodeLine{GET   /orders/1/lines  <-\/-\/-\/> orders[1].lines}
+\DoxyCodeLine{POST  /orders/1/lines  <-\/-\/-\/> orders[1].lines.push(data)}
+
+\end{DoxyCode}
+}
+
+{\ttfamily }\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md8}{}\doxysection{Commit Message Guidelines}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md8}
+{\ttfamily We have very precise rules over how our git commit messages can be formatted. This leads to {\bfseries{more readable messages}} that are easy to follow when looking through the {\bfseries{project history}}. But also, we use the git commit messages to {\bfseries{generate the change log}}.}
+
+{\ttfamily }\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md9}{}\doxysubsection{Format}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md9}
+{\ttfamily Each commit message consists of a {\bfseries{header}}, a {\bfseries{body}} and a {\bfseries{footer}}. The header has a special format that includes a type, a scope and a subject\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<type>[(optional scope)]: <description>}
+\DoxyCodeLine{}
+\DoxyCodeLine{[optional body]}
+\DoxyCodeLine{}
+\DoxyCodeLine{[optional footer(s)]}
+
+\end{DoxyCode}
+}
+
+{\ttfamily }\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md10}{}\doxysubsection{Examples}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md10}
+{\ttfamily 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docs(changelog): update changelog to beta.5}
+
+\end{DoxyCode}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{fix(release): need to depend on latest rxjs and zone.js}
+\DoxyCodeLine{}
+\DoxyCodeLine{The version in our package.json gets copied to the one we publish, and users need the latest of these.}
+
+\end{DoxyCode}
+}
+
+{\ttfamily }\hypertarget{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md11}{}\doxysection{Trunk based development}\label{md__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md11}
+{\ttfamily  For this project we generally use \href{https://cloud.google.com/solutions/devops/devops-tech-trunk-based-development}{\texttt{ trunk based development}}. Before you start coding, make sure you are somewhat familiar with this concept. You can read more about that \href{https://cloud.google.com/solutions/devops/devops-tech-trunk-based-development}{\texttt{ here}} and \href{https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow}{\texttt{ here}} }

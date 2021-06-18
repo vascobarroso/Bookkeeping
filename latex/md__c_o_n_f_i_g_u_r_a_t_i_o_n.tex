@@ -1,0 +1,52 @@
+The following configuration items can be set using environment variables, note that Docker users can make use of the {\ttfamily .env} file to store the configuration.\hypertarget{md__c_o_n_f_i_g_u_r_a_t_i_o_n_autotoc_md1}{}\doxysection{Database}\label{md__c_o_n_f_i_g_u_r_a_t_i_o_n_autotoc_md1}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Variable name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Variable name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value    }\\\cline{1-3}
+\endhead
+DATABASE\+\_\+\+HOST   &The host of the relational database.   &localhost    \\\cline{1-3}
+DATABASE\+\_\+\+PORT   &The port of the relational database.   &3306    \\\cline{1-3}
+DATABASE\+\_\+\+USERNAME   &The username which is used to authenticate against the database.   &cern    \\\cline{1-3}
+DATABASE\+\_\+\+PASSWORD   &The password which is used to authenticate against the database.   &cern    \\\cline{1-3}
+DATABASE\+\_\+\+NAME   &The name of the database   &bookkeeping    \\\cline{1-3}
+DATABASE\+\_\+\+CHARSET   &The charset of the relational database.   &utf8mb4    \\\cline{1-3}
+DATABASE\+\_\+\+COLLATE   &The collate of the relational database.   &utf8mb4\+\_\+unicode\+\_\+ci    \\\cline{1-3}
+DATABASE\+\_\+\+TIMEZONE   &The timezone of the database   &Etc/\+GMT+0   \\\cline{1-3}
+\end{longtabu}
+\hypertarget{md__c_o_n_f_i_g_u_r_a_t_i_o_n_autotoc_md2}{}\doxysection{JSON Web Token (\+JWT)}\label{md__c_o_n_f_i_g_u_r_a_t_i_o_n_autotoc_md2}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Variable name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Variable name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value    }\\\cline{1-3}
+\endhead
+JWT\+\_\+\+SECRET   &Secret passphrase to sign and verify tokens.   &\\\cline{1-3}
+JWT\+\_\+\+EXPIRATION   &Token expiration time as time literal.   &1d    \\\cline{1-3}
+JWT\+\_\+\+ISSUER   &Identifies principal that issued the JWT.   &o2-\/ui    \\\cline{1-3}
+JWT\+\_\+\+MAX\+\_\+\+AGE   &Token refresh expiration time as time literal.   &7d   \\\cline{1-3}
+\end{longtabu}
+\hypertarget{md__c_o_n_f_i_g_u_r_a_t_i_o_n_autotoc_md3}{}\doxysection{Open\+ID}\label{md__c_o_n_f_i_g_u_r_a_t_i_o_n_autotoc_md3}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Variable name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Variable name   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value    }\\\cline{1-3}
+\endhead
+OPENID\+\_\+\+ID   &Application ID   &\\\cline{1-3}
+OPENID\+\_\+\+SECRET   &Application secret   &\\\cline{1-3}
+OPENID\+\_\+\+REDIRECT   &Authentication callback   &\\\cline{1-3}
+OPENID\+\_\+\+WELL\+\_\+\+KNOWN   &So-\/called \char`\"{}well-\/known\char`\"{} endpoint defining Open\+ID configuration.   &\href{https://auth.cern.ch/auth/realms/cern/.well-known/openid-configuration}{\texttt{ https\+://auth.\+cern.\+ch/auth/realms/cern/.\+well-\/known/openid-\/configuration}}   \\\cline{1-3}
+\end{longtabu}

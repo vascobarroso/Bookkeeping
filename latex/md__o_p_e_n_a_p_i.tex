@@ -1,0 +1,70 @@
+\hypertarget{md__o_p_e_n_a_p_i_autotoc_md41}{}\doxysection{Client generation}\label{md__o_p_e_n_a_p_i_autotoc_md41}
+Reference \href{https://github.com/OpenAPITools/openapi-generator}{\texttt{ Open\+APITools/openapi-\/generator}} on how to generate a C++ (or any other language) client based on an Open\+API specification. Note that the generated client is of course a best effort and can be incomplete or wrong.\hypertarget{md__o_p_e_n_a_p_i_autotoc_md42}{}\doxysection{Visualization of specification}\label{md__o_p_e_n_a_p_i_autotoc_md42}
+You can use the \href{https://editor.swagger.io/}{\texttt{ Swagger Editor}} to visualize the Open\+API specification. Load the {\ttfamily spec/openapi.\+yaml} and not the {\ttfamily spec/openapi-\/source.\+yaml}.\hypertarget{md__o_p_e_n_a_p_i_autotoc_md43}{}\doxysection{all\+Of and additional\+Properties}\label{md__o_p_e_n_a_p_i_autotoc_md43}
+When you use {\ttfamily additional\+Properties\+: false} on an {\ttfamily all\+Of} schema, it will only consider the schema where the {\ttfamily additional\+Properties} property has been set, not the resulting merged schema.\hypertarget{md__o_p_e_n_a_p_i_autotoc_md44}{}\doxysubsection{Specification}\label{md__o_p_e_n_a_p_i_autotoc_md44}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components:}
+\DoxyCodeLine{  schemas:}
+\DoxyCodeLine{    Entity:}
+\DoxyCodeLine{      type: object}
+\DoxyCodeLine{      properties:}
+\DoxyCodeLine{        id:}
+\DoxyCodeLine{          type: integer}
+\DoxyCodeLine{          format: int64}
+\DoxyCodeLine{      required:}
+\DoxyCodeLine{        -\/ id}
+\DoxyCodeLine{    Log:}
+\DoxyCodeLine{      allOf:}
+\DoxyCodeLine{        -\/ \$ref: "{}\#/components/schemas/Model"{}}
+\DoxyCodeLine{        -\/ type: object}
+\DoxyCodeLine{          properties:}
+\DoxyCodeLine{            title:}
+\DoxyCodeLine{              type: string}
+\DoxyCodeLine{          required:}
+\DoxyCodeLine{            -\/ title}
+\DoxyCodeLine{          additionalProperties: false}
+
+\end{DoxyCode}
+\hypertarget{md__o_p_e_n_a_p_i_autotoc_md45}{}\doxysubsection{Response}\label{md__o_p_e_n_a_p_i_autotoc_md45}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  "{}id"{}: 1,}
+\DoxyCodeLine{  "{}title"{}: "{}Log \#1"{}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md__o_p_e_n_a_p_i_autotoc_md46}{}\doxysubsection{Result}\label{md__o_p_e_n_a_p_i_autotoc_md46}
+\begin{quote}
+{\bfseries{Note\+:}} When validating the data, servers and clients will validate the combined model against each model it consists of. It is recommended to avoid using conflicting properties (like properties that have the same names, but different data types). \end{quote}
+This implies that behavior is actually correctly. The two schemas are evaluated individually for the whole object, thus the {\ttfamily additional\+Properties} will fail because it expects only the required {\ttfamily title} property but actually receives the combined model (thus both {\ttfamily id} and {\ttfamily title}).\hypertarget{md__o_p_e_n_a_p_i_autotoc_md47}{}\doxysubsection{Solution}\label{md__o_p_e_n_a_p_i_autotoc_md47}
+The {\ttfamily spec/convert.\+js} will convert {\ttfamily all\+Of} schema composition to a single schema. For the earlier provided specification the {\ttfamily Log} schema would result in the following\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components:}
+\DoxyCodeLine{  schemas:}
+\DoxyCodeLine{    Entity:}
+\DoxyCodeLine{      type: object}
+\DoxyCodeLine{      properties:}
+\DoxyCodeLine{        id:}
+\DoxyCodeLine{          type: integer}
+\DoxyCodeLine{          format: int64}
+\DoxyCodeLine{      required:}
+\DoxyCodeLine{        -\/ id}
+\DoxyCodeLine{    Log:}
+\DoxyCodeLine{      type: object}
+\DoxyCodeLine{      properties:}
+\DoxyCodeLine{        id:}
+\DoxyCodeLine{          type: integer}
+\DoxyCodeLine{          format: int64}
+\DoxyCodeLine{        title:}
+\DoxyCodeLine{          type: string}
+\DoxyCodeLine{      required:}
+\DoxyCodeLine{        -\/ id}
+\DoxyCodeLine{        -\/ title}
+\DoxyCodeLine{      additionalProperties: false}
+
+\end{DoxyCode}
+ 
